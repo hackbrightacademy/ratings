@@ -59,7 +59,7 @@ chriszf.password = &quot;mynewpassword&quot;
 db.commit()</code></pre>
 <p>The change_password function no longer exists in that form; it's existence is obviated as we can access columns directly as if they were object attributes, as long as we <em>commit</em> the database after every modification to an object. Overall, the amount of overhead code required to store data for an app dropped precipitously when ORMs first appeared, allowing lone programmers to single-handedly build a full-stack application in such short time periods.</p>
 <h2 id="chapter-0-in-which-we-choose-our-tools">Chapter 0: In Which We Choose our Tools</h2>
-<p>Let's start by cloning the repository from <a href="https://github.com/chriszf/ratings">github</a>.</p>
+<p>Let's start by cloning the repository from <a href="https://github.com/hackbrightacademy/ratings">github</a>.</p>
 <p>First, we'll choose our ORM.</p>
 <p>Just kidding, the choice has been made for you: you will use <a href="http://sqlalchemy.org">sqlalchemy</a>.</p>
 <p>There are other ORMs out there, each implementing the different ideas in Fowler's book slightly differently. We simplify the field by choosing sqlalchemy. The other primary competing ORM is the one that is bundled with <a href="https://docs.djangoproject.com/en/dev/topics/db/queries/">Django</a>. The one restriction is that it <em>cannot</em> be used outside of Django, so we won't consider it here.</p>
