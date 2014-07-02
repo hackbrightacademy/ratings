@@ -176,7 +176,7 @@ if __name__ == &quot;__main__&quot;:
 <pre><code>@app.route(&quot;/&quot;)
 def index():
     user_list = model.session.query(model.User).all()
-    return render_template(&quot;user_list.html&quot;, users=user_list)</code></pre>
+    return render_template(&quot;user_list.html&quot;, user_list=user_list)</code></pre>
 <p>Make a 'templates' directory, and add a user_list.html file to it:</p>
 <pre><code>&lt;html&gt;
 {% for user in user_list %}
@@ -190,7 +190,7 @@ def index():
 <pre><code>@app.route(&quot;/&quot;)
 def index():
     user_list = model.session.query(model.User).limit(5).all()
-    return render_template(&quot;user_list.html&quot;, users=user_list)</code></pre>
+    return render_template(&quot;user_list.html&quot;, user_list=user_list)</code></pre>
 <p>Make a 'templates' directory, and add a user_list.html file to it:</p>
 <pre><code>
 <p>This will limit the number of users the query will run through.</p>
