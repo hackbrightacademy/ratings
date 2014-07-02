@@ -176,7 +176,7 @@ if __name__ == &quot;__main__&quot;:
 <pre><code>@app.route(&quot;/&quot;)
 def index():
     user_list = model.session.query(model.User).all()
-    return render_template(&quot;user_list.html&quot;, user_list=user_list)</code></pre>
+    return render_template(&quot;user_list.html&quot;, users=user_list)</code></pre>
 <p>Make a 'templates' directory, and add a user_list.html file to it:</p>
 <pre><code>&lt;html&gt;
 {% for user in user_list %}
@@ -186,12 +186,12 @@ def index():
 <p>Start your app by running:</p>
 <pre><code>python judgement.py</code></pre>
 <p>And access it by going to <a href="http://localhost:5000/">http://localhost:5000/</a> in your browser.</p>
-<p>Note: This could take a really long time to load assuming you're using the list with thousands of users so try modifying this line in judgement.py:</p>
+<p>Note: There is a small bug in the code above, can you find it?</p>
+<p>Loading this page could take a really long time to load assuming you're using the list with thousands of users so try modifying this line in judgement.py:</p>
 <pre><code>@app.route(&quot;/&quot;)
 def index():
     user_list = model.session.query(model.User).limit(5).all()
-    return render_template(&quot;user_list.html&quot;, user_list=user_list)</code></pre>
-<p>Make a 'templates' directory, and add a user_list.html file to it:</p>
+    return render_template(&quot;user_list.html&quot;, users=user_list)
 <pre><code>
 <p>This will limit the number of users the query will run through.</p>
 <p>By switching to SA, we've eliminated a good deal of boilerplate code that was necessary to interact with our database. Instead, we can directly use objects and their attributes without worry about how to query for them.</p>
