@@ -192,7 +192,7 @@ def index():
 def index():
     user_list = model.session.query(model.User).limit(5).all()
     return render_template(&quot;user_list.html&quot;, users=user_list)
-<pre><code>
+</pre></code>
 <p>This will limit the number of users the query will run through.</p>
 <p>By switching to SA, we've eliminated a good deal of boilerplate code that was necessary to interact with our database. Instead, we can directly use objects and their attributes without worry about how to query for them.</p>
 <h3 id="your-mission-should-you-choose-to-accept-it">Your mission, should you choose to accept it</h3>
