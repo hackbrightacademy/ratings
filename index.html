@@ -192,14 +192,14 @@ A movie has many users through ratings</code></pre>
 <p>In your first window, type the following, and something that appears to be a sql table schema will scroll by.</p>
 <pre><code>Base.metadata.create_all(engine)</code></pre>
 <p>Back in your second window, do another <em>ls</em> You should see a ratings.db file. Invoke sqlite on this file, and investigate:</p>
-<pre><code>Meringue:ratings2 chriszf$ sqlite3 ratings.db
+<pre><code>$ sqlite3 ratings.db
 SQLite version 3.7.7 2011-06-25 16:35:41
 Enter &quot;.help&quot; for instructions
 Enter SQL statements terminated with a &quot;;&quot;
-sqlite&gt; .mode columns
-sqlite&gt; .header on
+
 sqlite&gt; .tables
 users
+
 sqlite&gt; .schema users
 CREATE TABLE users (
         id INTEGER NOT NULL, 
@@ -209,6 +209,7 @@ CREATE TABLE users (
         zipcode VARCHAR(15), 
         PRIMARY KEY (id)
 );
+
 sqlite&gt; </code></pre>
 <center>
 <p>Mind = <strong>blown</strong></p>
