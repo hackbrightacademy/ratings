@@ -11,9 +11,9 @@
 <body>
 <h1 id="judgemental-eye-being-a-walkthrough-on-building-a-movie-rating-app">Judgemental Eye: Being a Walkthrough on Building a Movie Rating App</h1>
 <img width="690px" src="http://art.penny-arcade.com/photos/217529237_jw3tg-L-2.jpg" />
-<p>Having spent so much time on <a href="http://chriszf.github.com/tipsy">Tipsy</a>, we should feel fairly comfortable building an app-which-is-like-a-blog from scratch. Scratch here is relative term. We used <a href="http://sqlite.org">sqlite</a> for our database, writing our own queries, but used <a href="http://flask.pocoo.org">Flask</a> for its web server and templating engine.</p>
+<p> At this point we should feel fairly comfortable building an app-which-is-like-a-blog from scratch. Scratch here is relative term. We used <a href="http://sqlite.org">sqlite</a> for our database, writing our own queries, but used <a href="http://flask.pocoo.org">Flask</a> for its web server and templating engine.</p>
 <p>We're going to move on, building a more complex application than before. This time, we're going to use a concept called 'Machine Learning' to teach a computer how to predict things about a human's tastes.</p>
-<p>In addition, we're going to remove ourself one layer further from the database using something called an <a href="http://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>. In the third part of the Tipsy tutorial, we took our data dictionaries and turned them into classes, changing database-access functions into class methods, in an effort to organize our code.</p>
+<p>In addition, we're going to remove ourself one layer further from the database using something called an <a href="http://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>. In the third part of the session tutorial, we took our data dictionaries and turned them into classes, changing database-access functions into class methods, in an effort to organize our code.</p>
 <p>In 2003, <a href="http://en.wikipedia.org/wiki/Martin_Fowler">Martin Fowler</a> documented a technique called &quot;<a href="http://books.google.com/books?id=FyWZt5DdvFkC&amp;lpg=PA1&amp;dq=Patterns%20of%20Enterprise%20Application%20Architecture%20by%20Martin%20Fowler&amp;pg=PT187#v=onepage&amp;q=active%20record&amp;f=false">Active Record</a>&quot;, a scheme which can be diagrammed like so:</p>
 <pre><code>Table  &lt;-&gt;  Class
 Column &lt;-&gt;  Attribute
@@ -59,11 +59,11 @@ chriszf.password = &quot;mynewpassword&quot;
 db.commit()</code></pre>
 <p>The change_password function no longer exists in that form; it's existence is obviated as we can access columns directly as if they were object attributes, as long as we <em>commit</em> the database after every modification to an object. Overall, the amount of overhead code required to store data for an app dropped precipitously when ORMs first appeared, allowing lone programmers to single-handedly build a full-stack application in such short time periods.</p>
 <h2 id="chapter-0-in-which-we-choose-our-tools">Chapter 0: In Which We Choose our Tools</h2>
-<p>Let's start by cloning the repository from <a href="https://github.com/chriszf/ratings">github</a>.</p>
+<p>Let's start by cloning the repository from <a href="https://github.com/hackbrightacademy/ratings">github</a>.</p>
 <p>First, we'll choose our ORM.</p>
 <p>Just kidding, the choice has been made for you: you will use <a href="http://sqlalchemy.org">sqlalchemy</a>.</p>
-<p>There are other ORMs out there, each implementing the different ideas in Fowler's book slightly differently. We simplify the field by choosing sqlalchemy. The other primary competing ORM is the one that is bundled with <a href="https://docs.djangoproject.com/en/dev/topics/db/queries/">Django</a>. The one restriction is that it <em>cannot</em> be used outside of Django, so we won't consider it here.</p>
-<p>We'll continue to use Flask because it is suitable for our app, and we'll continue to use Python because I'm feeling generous, but we'll teach two new tools to help us out with using both: virtualenv and pip.</p>
+<p>There are other ORMs out there, each implementing the different ideas in Fowler's book slightly differently. We simplify the field by choosing sqlalchemy. The other primary competing ORM is the one that is bundled with <a href="https://docs.djangoproject.com/en/dev/topics/db/queries/">Django</a>. This one is also full-featured and powerful&mdash;but it's designed to be used with Django, and is less commonly-used outside of the rest of the Django stack.</p>
+<p>We'll continue to use Flask because it is suitable for our app, and we'll continue to use Python because I'm feeling generous. We'll also use virtualenv and pip.</p>
 <p>You may have already seen pip, the python package installer. You find the name of the package you want, and type in</p>
 <pre><code>pip install package-name</code></pre>
 <p>To find the correct package name to use with pip, you might try to find the package in question on <a href="https://crate.io/">crate.io</a>, a package index. My usually methodology is, if I wander across a webpage that says, &quot;Use the beautiful soup package to parse html&quot;, I just try</p>
@@ -79,11 +79,11 @@ db.commit()</code></pre>
 /home
 /home/student                    &lt;-- Where your files live
 /home/student/fall2012/ratings   &lt;-- Where your project lives</code></pre>
-<p>Your files live under /home/student, and you're free to do whatever you like with those. Unfortunately, python lives in /usr/local, because it's a program that <em>everyone</em> using your machine can use. (Remember, a unix machine is by default a multi-user machine. It only <em>looks</em> like it's a single-user experience). To prevent you from messing with a shared program, you are prevented from writing to /usr/local, although reading from it is no problem.</p>
+<p>Your files live under /home/student/src, and you're free to do whatever you like with those. Unfortunately, python lives in /usr/local, because it's a program that <em>everyone</em> using your machine can use. (Remember, a unix machine is by default a multi-user machine. It only <em>looks</em> like it's a single-user experience). To prevent you from messing with a shared program, you are prevented from writing to /usr/local, although reading from it is no problem.</p>
 <p>It would be difficult indeed if we could not install new packages at all without summoning the super-user to grant us access, but this is how development went for a long time on multi-user unix systems. Naturally, someone has devised a way around this, called virtualenv.</p>
 <p>Virtualenv installs a personal version of python in the directory where your project lives. This python is 'sandboxed', as you are free to do whatever you like with it with no consequences for other users. Go into the folder you cloned from github and type the following.</p>
-<pre><code>virtualenv env --no-site-packages</code></pre>
-<p>It should greet you with a success message shortly. This creates a 'virtual environment', your sandboxed python installation in the folder /home/student/fall2012/ratings/<strong>env</strong>. If you ls that directory, you'll find a 'bin' directory, amongst other things. Inside that bin directory is a copy of python.</p>
+<pre><code>virtualenv env</code></pre>
+<p>It should greet you with a success message shortly. This creates a 'virtual environment', your sandboxed python installation in the folder /home/student/src/ratings/<strong>env</strong>. If you ls that directory, you'll find a 'bin' directory, amongst other things. Inside that bin directory is a copy of python.</p>
 <p>You can't run it just yet. If you type in 'python' right now, you'll get the standard system python, and not your copy. You can verify this by typing</p>
 <pre><code>which python</code></pre>
 <p>This command tells you exactly which copy of python you'll run when you type python into the shell. You have to trick your shell into preferring your copy first, by <em>activating</em> the virtual environment. From the <em>ratings</em> directory, type in</p>
@@ -192,14 +192,14 @@ A movie has many users through ratings</code></pre>
 <p>In your first window, type the following, and something that appears to be a sql table schema will scroll by.</p>
 <pre><code>Base.metadata.create_all(engine)</code></pre>
 <p>Back in your second window, do another <em>ls</em> You should see a ratings.db file. Invoke sqlite on this file, and investigate:</p>
-<pre><code>Meringue:ratings2 chriszf$ sqlite3 ratings.db
+<pre><code>$ sqlite3 ratings.db
 SQLite version 3.7.7 2011-06-25 16:35:41
 Enter &quot;.help&quot; for instructions
 Enter SQL statements terminated with a &quot;;&quot;
-sqlite&gt; .mode columns
-sqlite&gt; .header on
+
 sqlite&gt; .tables
 users
+
 sqlite&gt; .schema users
 CREATE TABLE users (
         id INTEGER NOT NULL, 
@@ -209,10 +209,11 @@ CREATE TABLE users (
         zipcode VARCHAR(15), 
         PRIMARY KEY (id)
 );
+
 sqlite&gt; </code></pre>
 <center>
 <p>Mind = <strong>blown</strong></p>
-<img src="http://tifr.us/storage/post-images/Tim-Eric-Mind-Blown-__SQUARESPACE_CACHEVERSION=1316658161000.gif">
+<img src="http://i.imgur.com/sg017lt.gif">
 </center>
 
 <p>Quit both sqlite3 and python then delete your <em>ratings.db</em> file. Create a similar class for Movies and Ratings. Refer to the <a href="http://docs.sqlalchemy.org/en/rel_0_7/orm/tutorial.html">sqlalchemy tutorial</a> if necessary. When you're done, repeat the process of running <strong>Base.metadata.create_all()</strong> to create your tables. Reopen your sqlite3 database in your second window, making sure to turn headers on and switching the mode to columns.</p>
@@ -249,6 +250,10 @@ Session = None</code></pre>
 <pre><code>INSERT INTO users VALUES (null, &quot;c@hackbrightacademy.com&quot;, &quot;mypass&quot;, 29, &quot;94103&quot;);</code></pre>
 </div>
 
+<p>For clarity, as we work in the sqlite console, let's ask for column headings to show up neatly-formatted:</p>
+<pre><code>sqlite&gt; .mode columns
+sqlite&gt; .headers on</code></pre>
+
 <p>Now, we will transmute SQL into Python. First, query to see your shiny new record in sqlite:</p>
 <pre><code>sqlite&gt; select * from users;
 id          email                    password    age         zipcode   
@@ -265,8 +270,10 @@ c@hackbrightacademy</code></pre>
 id          email                    password    age         zipcode   
 ----------  -----------------------  ----------  ----------  ----------
 1           c@hackbrightacademy.com  mypass      29          94103     </code></pre>
-<p>Nothing! What gives? Well, like when we did raw sql (and not dissimilar to git), we need to commit data after we've modified it. In python:</p>
+<p>Nothing! What gives? Well, somewhat similar to git, we need to commit data after we've modified it. In python:</p>
 <pre><code>&gt;&gt;&gt; session.commit()</code></pre>
+<p>(This is because SQLAlchemy uses SQL "transactions" by default, and we need to commit changes explicitly to save all the changes that have been made to the model objects).</p>
+
 <p>And query again:</p>
 <pre><code>sqlite&gt; select * from users;
 id          email                    password    age         zipcode   
@@ -275,7 +282,7 @@ id          email                    password    age         zipcode
 <p>SQLAlchemy took our python and <em>wrote</em> the appropriate SQL update query for us behind the scenes. This is a powerful idea, because now we can write programs, only worrying about the classes and data we're interested in, and not how to write the SQL we need to save it somewhere.</p>
 <center>
 <p><strong>Once more, for effect:</strong></p>
-<img src="http://tifr.us/storage/post-images/Tim-Eric-Mind-Blown-__SQUARESPACE_CACHEVERSION=1316658161000.gif">
+<img src="http://i.imgur.com/sg017lt.gif">
 </center>
 
 <h3 id="reversing-directions">Reversing Directions</h3>
