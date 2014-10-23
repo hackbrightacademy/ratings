@@ -1,7 +1,7 @@
 PANDOC=pandoc
 BASE_CSS=normalize.css
 CUSTOM_CSS=tutorial.css
-SOURCES=index.html stage1.html tipsy_03.html
+SOURCES=index.html judgement2.html judgement3.html
 
 all: $(SOURCES)
 

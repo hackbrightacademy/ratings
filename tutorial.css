@@ -15,7 +15,7 @@ h2 {
     color: #005555;
 }
 
-body>pre, div.spoilers {
+body>pre, div.spoilers, div.note {
     border: 2px solid #ccc;
     background-color: #eee;
     padding-bottom: 15px;

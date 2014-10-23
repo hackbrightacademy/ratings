@@ -1,0 +1,3 @@
+Requires Pandoc
+
+Run make to produce html files from markdown
