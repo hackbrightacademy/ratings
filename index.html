@@ -250,6 +250,10 @@ Session = None</code></pre>
 <pre><code>INSERT INTO users VALUES (null, &quot;c@hackbrightacademy.com&quot;, &quot;mypass&quot;, 29, &quot;94103&quot;);</code></pre>
 </div>
 
+<p>For clarity, as we work in the sqlite console, let's ask for column headings to show up neatly-formatted:</p>
+<pre><code>sqlite&gt; .mode columns
+sqlite&gt; .headers on</code></pre>
+
 <p>Now, we will transmute SQL into Python. First, query to see your shiny new record in sqlite:</p>
 <pre><code>sqlite&gt; select * from users;
 id          email                    password    age         zipcode   
@@ -266,8 +270,10 @@ c@hackbrightacademy</code></pre>
 id          email                    password    age         zipcode   
 ----------  -----------------------  ----------  ----------  ----------
 1           c@hackbrightacademy.com  mypass      29          94103     </code></pre>
-<p>Nothing! What gives? Well, like when we did raw sql (and not dissimilar to git), we need to commit data after we've modified it. In python:</p>
+<p>Nothing! What gives? Well, somewhat similar to git, we need to commit data after we've modified it. In python:</p>
 <pre><code>&gt;&gt;&gt; session.commit()</code></pre>
+<p>(This is because SQLAlchemy uses SQL "transactions" by default, and we need to commit changes explicitly to save all the changes that have been made to the model objects).</p>
+
 <p>And query again:</p>
 <pre><code>sqlite&gt; select * from users;
 id          email                    password    age         zipcode   
@@ -276,7 +282,7 @@ id          email                    password    age         zipcode
 <p>SQLAlchemy took our python and <em>wrote</em> the appropriate SQL update query for us behind the scenes. This is a powerful idea, because now we can write programs, only worrying about the classes and data we're interested in, and not how to write the SQL we need to save it somewhere.</p>
 <center>
 <p><strong>Once more, for effect:</strong></p>
-<img src="http://tifr.us/storage/post-images/Tim-Eric-Mind-Blown-__SQUARESPACE_CACHEVERSION=1316658161000.gif">
+<img src="http://i.imgur.com/sg017lt.gif">
 </center>
 
 <h3 id="reversing-directions">Reversing Directions</h3>
