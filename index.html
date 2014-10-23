@@ -62,8 +62,8 @@ db.commit()</code></pre>
 <p>Let's start by cloning the repository from <a href="https://github.com/hackbrightacademy/ratings">github</a>.</p>
 <p>First, we'll choose our ORM.</p>
 <p>Just kidding, the choice has been made for you: you will use <a href="http://sqlalchemy.org">sqlalchemy</a>.</p>
-<p>There are other ORMs out there, each implementing the different ideas in Fowler's book slightly differently. We simplify the field by choosing sqlalchemy. The other primary competing ORM is the one that is bundled with <a href="https://docs.djangoproject.com/en/dev/topics/db/queries/">Django</a>. The one restriction is that it <em>cannot</em> be used outside of Django, so we won't consider it here.</p>
-<p>We'll continue to use Flask because it is suitable for our app, and we'll continue to use Python because I'm feeling generous, but we'll teach two new tools to help us out with using both: virtualenv and pip.</p>
+<p>There are other ORMs out there, each implementing the different ideas in Fowler's book slightly differently. We simplify the field by choosing sqlalchemy. The other primary competing ORM is the one that is bundled with <a href="https://docs.djangoproject.com/en/dev/topics/db/queries/">Django</a>. This one is also full-featured and powerful&mdash;but it's designed to be used with Django, and is less commonly-used outside of the rest of the Django stack.</p>
+<p>We'll continue to use Flask because it is suitable for our app, and we'll continue to use Python because I'm feeling generous. We'll also use virtualenv and pip.</p>
 <p>You may have already seen pip, the python package installer. You find the name of the package you want, and type in</p>
 <pre><code>pip install package-name</code></pre>
 <p>To find the correct package name to use with pip, you might try to find the package in question on <a href="https://crate.io/">crate.io</a>, a package index. My usually methodology is, if I wander across a webpage that says, &quot;Use the beautiful soup package to parse html&quot;, I just try</p>
@@ -79,11 +79,11 @@ db.commit()</code></pre>
 /home
 /home/student                    &lt;-- Where your files live
 /home/student/fall2012/ratings   &lt;-- Where your project lives</code></pre>
-<p>Your files live under /home/student, and you're free to do whatever you like with those. Unfortunately, python lives in /usr/local, because it's a program that <em>everyone</em> using your machine can use. (Remember, a unix machine is by default a multi-user machine. It only <em>looks</em> like it's a single-user experience). To prevent you from messing with a shared program, you are prevented from writing to /usr/local, although reading from it is no problem.</p>
+<p>Your files live under /home/student/src, and you're free to do whatever you like with those. Unfortunately, python lives in /usr/local, because it's a program that <em>everyone</em> using your machine can use. (Remember, a unix machine is by default a multi-user machine. It only <em>looks</em> like it's a single-user experience). To prevent you from messing with a shared program, you are prevented from writing to /usr/local, although reading from it is no problem.</p>
 <p>It would be difficult indeed if we could not install new packages at all without summoning the super-user to grant us access, but this is how development went for a long time on multi-user unix systems. Naturally, someone has devised a way around this, called virtualenv.</p>
 <p>Virtualenv installs a personal version of python in the directory where your project lives. This python is 'sandboxed', as you are free to do whatever you like with it with no consequences for other users. Go into the folder you cloned from github and type the following.</p>
-<pre><code>virtualenv env --no-site-packages</code></pre>
-<p>It should greet you with a success message shortly. This creates a 'virtual environment', your sandboxed python installation in the folder /home/student/fall2012/ratings/<strong>env</strong>. If you ls that directory, you'll find a 'bin' directory, amongst other things. Inside that bin directory is a copy of python.</p>
+<pre><code>virtualenv env</code></pre>
+<p>It should greet you with a success message shortly. This creates a 'virtual environment', your sandboxed python installation in the folder /home/student/src/ratings/<strong>env</strong>. If you ls that directory, you'll find a 'bin' directory, amongst other things. Inside that bin directory is a copy of python.</p>
 <p>You can't run it just yet. If you type in 'python' right now, you'll get the standard system python, and not your copy. You can verify this by typing</p>
 <pre><code>which python</code></pre>
 <p>This command tells you exactly which copy of python you'll run when you type python into the shell. You have to trick your shell into preferring your copy first, by <em>activating</em> the virtual environment. From the <em>ratings</em> directory, type in</p>
