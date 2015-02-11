@@ -1,6 +1,6 @@
 Judgemental Eye: Being a Walkthrough on Building a Movie Rating App
 ===================================================================
-By this time, our judgemental app should be approaching feature completion for a basic version. Check out the [reference version](http://intense-bastion-5418.herokuapp.com/) and the [source](https://github.com/chriszf/ratings/tree/deployed) to determine the minimum app you need to build.
+By this time, our judgemental app should be approaching feature completion for a basic version. Check out the [reference source](https://github.com/chriszf/ratings/tree/deployed) to determine the minimum app you need to build.
 
 You may be wondering at this point, where the judgement comes into play with the judgemental eye. Well, wonder no more. We're going to build it.
 
